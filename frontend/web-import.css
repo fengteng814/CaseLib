@@ -1,0 +1,231 @@
+/* frontend/web-import.css */
+
+.web-import-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.web-import-form-section {
+  margin-bottom: 16px;
+}
+
+.web-import-form {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.web-import-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+#import-url-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.web-import-form-row {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+#import-parse-btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#import-parse-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.web-import-supported {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #555;
+}
+
+#supported-sites-list {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+
+.web-import-preview-section {
+  min-height: 180px;
+}
+
+.web-import-preview-section--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+  font-size: 14px;
+}
+
+.center-hint {
+  margin: 0;
+}
+
+.web-import-preview-card {
+  display: flex;
+  gap: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.web-import-preview-left {
+  flex: 0 0 360px;
+}
+
+.web-import-cover-wrap {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.web-import-cover-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.web-import-cover-placeholder {
+  height: 220px;
+  border-radius: 8px;
+  background: repeating-linear-gradient(
+    45deg,
+    #f3f4f6,
+    #f3f4f6 10px,
+    #e5e7eb 10px,
+    #e5e7eb 20px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 13px;
+}
+
+.web-import-preview-right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.web-import-title {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.web-import-meta-list {
+  font-size: 13px;
+  color: #444;
+}
+
+.web-import-meta-item {
+  display: flex;
+  margin-bottom: 2px;
+}
+
+.web-import-meta-item .label {
+  min-width: 70px;
+  color: #666;
+}
+
+.web-import-meta-item .value a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.web-import-meta-item .value a:hover {
+  text-decoration: underline;
+}
+
+.web-import-description {
+  margin-top: 6px;
+  max-height: 140px;
+  overflow: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #444;
+}
+
+.web-import-description .label {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.web-import-description .value p {
+  margin: 0 0 4px;
+}
+
+.web-import-folder-row {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#import-folder-input {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 13px;
+}
+
+.web-import-actions {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#import-start-btn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: none;
+  background-color: #16a34a;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#import-start-btn:hover {
+  background-color: #15803d;
+}
+
+.web-import-status-text {
+  font-size: 13px;
+  color: #555;
+}
+
+/* 小屏兼容 */
+@media (max-width: 768px) {
+  .web-import-preview-card {
+    flex-direction: column;
+  }
+
+  .web-import-preview-left {
+    flex: 0 0 auto;
+  }
+}

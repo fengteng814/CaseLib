@@ -1,0 +1,1308 @@
+/* ===============================
+   全局基础样式
+   =============================== */
+
+   *,
+   *::before,
+   *::after {
+     box-sizing: border-box;
+   }
+   
+   body {
+     margin: 0;
+     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+       sans-serif;
+     background-color: #f5f5f5;
+     color: #222;
+   }
+   
+   /* 适度提示当前是编辑模式 */
+   body.mode-edit {
+     background-color: #f7f6ff;
+   }
+   
+   /* ===============================
+      布局：根容器 + 头部 + Tab
+      =============================== */
+   
+   .app-root {
+     max-width: 1280px;
+     margin: 0 auto;
+     padding: 16px 24px 32px;
+   }
+   
+   /* 顶部区域（粘顶） */
+   .app-header {
+     position: sticky;
+     top: 0;
+     z-index: 50;
+     background-color: #f5f5f5;
+   
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+     margin-bottom: 16px;
+     border-bottom: 1px solid #ddd;
+     padding-bottom: 12px;
+   }
+   
+   /* 滚动后增加一点阴影，强化层次感 */
+   .app-header.stuck {
+     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+   }
+   
+   .app-title {
+     margin: 0;
+     font-size: 22px;
+     font-weight: 600;
+   }
+   
+   /* 选项卡（按项目 / 按图片） */
+   .tab-bar {
+     display: inline-flex;
+     align-items: center;
+     background-color: #f3f3f3;
+     border-radius: 999px;
+     padding: 3px;
+     gap: 4px;
+   }
+   
+   .tab-button {
+     border: none;
+     background: transparent;
+     border-radius: 999px;
+     padding: 6px 14px;
+     font-size: 13px;
+     color: #666;
+     cursor: pointer;
+     transition: background-color 0.15s ease, color 0.15s ease,
+       box-shadow 0.15s ease;
+   }
+   
+   .tab-button:hover {
+     background-color: #e3e3e3;
+   }
+   
+   .tab-button.active {
+     background-color: #ffffff;
+     color: #0078d4;
+     font-weight: 600;
+     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+   }
+   
+   /* ===============================
+      工具栏（搜索 + 排序 + 刷新 + 编辑 + 大星星）
+      =============================== */
+   
+   .toolbar {
+     position: relative; /* 作为大星星的定位参照 */
+     display: flex;
+     flex-wrap: wrap;
+     align-items: center;
+     gap: 8px;
+     margin-top: 4px;
+   }
+   
+   /* 搜索框容器 */
+   .search-box {
+     position: relative;
+     flex: 1 1 260px;
+     min-width: 200px;
+   }
+   
+   /* 搜索输入框本身 */
+   .toolbar input[type="text"] {
+     width: 100%;
+     padding: 6px 10px;
+     border-radius: 4px;
+     border: 1px solid #ccc;
+     font-size: 14px;
+   }
+   
+   /* 给右侧留出一点位置放 X 按钮 */
+   .search-box input[type="text"] {
+     padding-right: 26px;
+   }
+   
+   .toolbar input[type="text"]:focus {
+     outline: none;
+     border-color: #0078d4;
+     box-shadow: 0 0 0 1px rgba(0, 120, 212, 0.2);
+   }
+   
+   /* 搜索框中的清空按钮 X */
+   .search-clear-btn {
+     position: absolute;
+     right: 6px;
+     top: 50%;
+     transform: translateY(-50%);
+     border: none;
+     background: transparent;
+     padding: 0;
+     margin: 0;
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     font-size: 14px;
+     color: #999;
+     cursor: pointer;
+     display: none; /* 默认隐藏 */
+   }
+   
+   /* visible 时用 flex 让 “×” 完全居中 */
+   .search-clear-btn.visible {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+   
+   .search-clear-btn:hover {
+     background-color: rgba(0, 0, 0, 0.06);
+     color: #666;
+   }
+   
+   /* 工具栏里的按钮基础样式 */
+   .toolbar button {
+     padding: 6px 14px;
+     font-size: 14px;
+     border-radius: 4px;
+     border: none;
+     cursor: pointer;
+     transition: background-color 0.15s ease, box-shadow 0.15s ease;
+   }
+   
+   /* 普通按钮（搜索按钮）：蓝色 */
+   .toolbar button:not(.toolbar-secondary) {
+     background-color: #0078d4;
+     color: #fff;
+   }
+   
+   .toolbar button:not(.toolbar-secondary):hover {
+     background-color: #005ea6;
+     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+   }
+   
+   /* 灰色按钮（刷新 / 总编辑按钮 / 排序下拉）：共同样式 */
+   .toolbar-secondary {
+     background-color: #e0e0e0;
+     color: #444;
+     border: 1px solid #ccc;
+     min-width: 90px; /* 锁定一个宽度，避免文字变化导致抖动 */
+     text-align: center;
+   }
+   
+   .toolbar-secondary:hover {
+     background-color: #d5d5d5;
+   }
+   
+   /* 开启编辑模式时：红底提示 */
+   .toolbar-secondary.edit-on {
+     background-color: #d93025;
+     border-color: #d93025;
+     color: #fff;
+   }
+   
+   .toolbar-secondary.edit-on:hover {
+     background-color: #c5221f;
+   }
+   
+   /* 排序下拉框：尽量保持和灰色按钮风格统一 */
+   .sort-select {
+     padding: 6px 10px;
+     font-size: 14px;
+     min-width: 130px;
+     text-align: center;
+     text-align-last: center;
+   }
+   
+   .sort-select option {
+     text-align: center;
+   }
+   
+   .sort-select::-ms-expand {
+     display: none;
+   }
+   
+   /* ===============================
+      热词 / 标签条
+      =============================== */
+   
+   .tag-strip {
+     display: flex;
+     align-items: center;
+     flex-wrap: wrap;
+     gap: 6px;
+     padding: 6px 10px;
+     margin-top: 6px;
+     border-radius: 6px;
+     background-color: #ffffff;
+     border: 1px solid #dde9f7;
+   }
+   
+   .hot-tags-label {
+     font-size: 12px;
+     color: #666;
+     white-space: nowrap;
+   }
+   
+   /* 通用标签胶囊样式：固定标签 + 热词标签 */
+   .tag-pill {
+     border: 1px solid #c3ddf8;
+     background: #f7fbff;
+     color: #225ea8;
+     font-size: 12px;
+     padding: 3px 10px;
+     border-radius: 999px;
+     cursor: pointer;
+     white-space: nowrap;
+     transition: background-color 0.15s ease, border-color 0.15s ease;
+   }
+   
+   .tag-pill:hover {
+     background: #e5f1ff;
+     border-color: #9ccfff;
+   }
+   
+   /* 兼容老版本 hot-tags-bar / hot-tag-chip */
+   .hot-tags-bar {
+     display: none;
+     margin-top: 4px;
+     padding: 4px 8px 6px;
+     border-radius: 8px;
+     background-color: #ffffff;
+     border: 1px solid #e0e0e0;
+     flex-wrap: wrap;
+     align-items: center;
+     gap: 6px;
+   }
+   
+   .hot-tag-chip {
+     border-radius: 999px;
+     border: 1px solid #c5e7ff;
+     background-color: #f4f9ff;
+     color: #0b5fa8;
+     padding: 2px 10px;
+     font-size: 12px;
+     line-height: 20px;
+     cursor: pointer;
+     white-space: nowrap;
+     transition: background-color 0.15s ease, border-color 0.15s ease;
+   }
+   
+   .hot-tag-chip:hover {
+     background-color: #e4f1ff;
+     border-color: #9ccfff;
+   }
+   
+   @media (max-width: 768px) {
+     .hot-tags-bar {
+       margin-top: 2px;
+     }
+   }
+   
+   /* ===============================
+      主体 + Tab 面板
+      =============================== */
+   
+   .app-main {
+     margin-top: 12px;
+   }
+   
+   .tab-panel {
+     display: none;
+   }
+   
+   .tab-panel.active {
+     display: block;
+   }
+   
+   /* ===============================
+      项目网格视图
+      =============================== */
+   
+   .projects-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+     gap: 12px;
+   }
+   
+   /* 项目封面 */
+   .project-cover img,
+   .project-cover.placeholder {
+     width: 100%;
+     display: block;
+     object-fit: cover;
+     background-color: #eee;
+   }
+   
+   .project-cover img {
+     aspect-ratio: 4 / 3;
+   }
+   
+   .project-cover.placeholder {
+     padding: 36px 0;
+     text-align: center;
+     color: #999;
+     font-size: 13px;
+   }
+   
+   /* 项目信息 */
+   .project-info {
+     padding: 8px 10px 10px;
+   }
+   
+   .project-name {
+     font-size: 14px;
+     font-weight: 600;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+   }
+   
+   .project-meta {
+     margin-top: 2px;
+     font-size: 12px;
+     color: #777;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+   }
+   
+   /* 项目卡片：relative 方便内部浮层定位 */
+   .project-card {
+     position: relative;
+     background: #fff;
+     border-radius: 10px;
+     overflow: hidden;
+     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+     cursor: pointer;
+     display: flex;
+     flex-direction: column;
+     transition: box-shadow 0.15s ease, transform 0.15s ease;
+   }
+   
+   .project-card:hover {
+     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+     transform: translateY(-1px);
+   }
+   
+   /* 拖拽图片悬停在项目卡片上时的反馈 */
+    .project-card.drop-hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 悬停时显示虚线框 + 文案提示 */
+    .project-card.drop-hover::after {
+      content: "释放后添加到该项目";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 2px dashed #2f80ff;
+      background: rgba(47, 128, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #2f80ff;
+      pointer-events: none;
+    }
+
+   /* 选中状态：加一层白色半透明蒙版 */
+   .project-card.selected::after {
+     content: "";
+     position: absolute;
+     inset: 0;
+     background-color: rgba(255, 255, 255, 0.45);
+     pointer-events: none;
+   }
+
+   /* 上传进行中：暗色蒙版 + 提示文字 */
+    .project-card.uploading::after {
+      content: "正在导入图片…";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    /* 上传进行中的小圆圈动画 */
+    .project-card.uploading::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-top-color: #fff;
+      top: 50%;
+      left: 50%;
+      margin-top: -24px;  /* 在文字上方一点 */
+      margin-left: -10px;
+      animation: cslb-spin 0.8s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes cslb-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+   
+   /* 浮层基础：勾选框 / 编辑按钮 / 复制按钮都是 absolute */
+   .project-select-checkbox,
+   .project-edit-btn,
+   .project-copy-btn {
+     position: absolute;
+     z-index: 2;
+   }
+   
+   /* 勾选框位置：左上 */
+   .project-select-checkbox {
+     top: 8px;
+     left: 8px;
+   }
+   
+   /* 编辑按钮位置：右上 */
+   .project-edit-btn {
+     top: 8px;
+     right: 8px;
+   }
+   
+   /* 复制路径按钮位置：右上，与编辑按钮互斥显示 */
+   .project-copy-btn {
+     top: 8px;
+     right: 8px;
+   }
+   
+   /* 默认都隐藏，由 JS 加 is-visible 控制 */
+   .project-select-checkbox,
+   .project-edit-btn,
+   .project-copy-btn {
+     display: none;
+   }
+   
+   /* 编辑模式下：JS 加 is-visible 类才显示 */
+   .project-select-checkbox.is-visible {
+     display: inline-flex;
+     align-items: center;
+   }
+   
+   /* 勾选框大小 & 内部白色 */
+   .project-select-checkbox input[type="checkbox"] {
+     width: 16px;
+     height: 16px;
+     margin: 0;
+     background-color: #fff;
+   }
+   
+   .project-edit-btn.is-visible {
+     display: inline-block;
+     border: none;
+     border-radius: 999px;
+     padding: 2px 8px;
+     font-size: 11px;
+     background: rgba(0, 0, 0, 0.55);
+     color: #fff;
+     cursor: pointer;
+   }
+   
+   .project-edit-btn.is-visible:hover {
+     background: rgba(0, 0, 0, 0.8);
+   }
+   
+   /* 复制按钮：仅浏览状态显示，小圆形图标 —— 默认透明，悬停卡片时再出现 */
+   .project-copy-btn.is-visible {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     width: 26px;
+     height: 26px;
+     border-radius: 999px;
+     border: none;
+     font-size: 14px;
+     background: rgba(0, 0, 0, 0.45);
+     color: #fff;
+     cursor: pointer;
+   
+     opacity: 0;
+     pointer-events: none;
+     transition: opacity 0.15s ease;
+   }
+   
+   .project-card:hover .project-copy-btn.is-visible {
+     opacity: 1;
+     pointer-events: auto;
+   }
+   
+   .project-copy-btn.is-visible:hover {
+     background: rgba(0, 0, 0, 0.75);
+   }
+   
+   /* ===============================
+      瀑布流视图
+      =============================== */
+   
+   .waterfall-grid {
+     display: flex;
+     align-items: flex-start;
+     gap: 10px;
+   }
+   
+   .waterfall-column {
+     flex: 1 1 0;
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+   }
+   
+   .waterfall-item {
+     background: #fff;
+     border-radius: 8px;
+     overflow: hidden;
+     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+   }
+   
+   .waterfall-item img {
+     width: 100%;
+     display: block;
+   }
+   
+   .waterfall-caption {
+     font-size: 12px;
+     padding: 4px 6px 6px;
+     color: #555;
+   }
+   
+   /* 空态 / 提示 */
+   .center-hint {
+     text-align: center;
+     color: #666;
+     font-size: 13px;
+     padding: 24px 0;
+   }
+   
+   /* ===============================
+      Lightbox 大图预览
+      =============================== */
+   
+   .lightbox-overlay {
+     position: fixed;
+     inset: 0;
+     background: rgba(0, 0, 0, 0.78);
+     display: none;
+     align-items: center;
+     justify-content: center;
+     z-index: 9999;
+   }
+   
+   .lightbox-overlay.active {
+     display: flex;
+   }
+   
+   .lightbox-inner {
+     position: relative;
+   }
+   
+   /* 外层用于居中 */
+   .lightbox-img-wrap {
+     width: 90vw;
+     height: 90vh;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+   
+   /* 大图本身 */
+   .lightbox-image {
+     max-width: 100%;
+     max-height: 100%;
+     width: auto;
+     height: auto;
+     object-fit: contain;
+     user-select: none;
+     pointer-events: none;
+     transform-origin: center center;
+     transition: transform 0.15s ease-out;
+   }
+   
+   /* 左右切换按钮 */
+   .lightbox-nav-btn {
+     position: absolute;
+     top: 50%;
+     transform: translateY(-50%);
+     border: none;
+     background: rgba(0, 0, 0, 0.4);
+     color: #fff;
+     width: 36px;
+     height: 64px;
+     border-radius: 18px;
+     font-size: 24px;
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 0;
+   }
+   
+   .lightbox-nav-btn:hover {
+     background: rgba(0, 0, 0, 0.65);
+   }
+   
+   .lightbox-nav-prev {
+     left: -52px;
+   }
+   
+   .lightbox-nav-next {
+     right: -52px;
+   }
+   
+   @media (max-width: 768px) {
+     .lightbox-nav-prev {
+       left: 8px;
+     }
+     .lightbox-nav-next {
+       right: 8px;
+     }
+   }
+   
+   /* 关闭按钮（右上角 ×） */
+   .lightbox-close-btn {
+     position: absolute;
+     top: -40px;
+     right: -4px;
+     border: none;
+     background: transparent;
+     color: #fff;
+     font-size: 28px;
+     cursor: pointer;
+   }
+   
+   .lightbox-close-btn:hover {
+     color: #ddd;
+   }
+   
+   /* Lightbox “设为封面”按钮基础样式 */
+   .lightbox-set-cover-btn {
+     padding: 6px 16px;
+     border-radius: 999px;
+     border: none;
+     background-color: #0078d4;
+     color: #fff;
+     font-size: 13px;
+     cursor: pointer;
+   }
+   
+   .lightbox-set-cover-btn:hover {
+     background: #005ea6;
+   }
+   
+   /* 底部 footer：按钮居中 */
+   .lightbox-footer {
+     position: absolute;
+     left: 0;
+     right: 0;
+     bottom: 16px;
+     text-align: center;
+   }
+   
+   .lightbox-set-cover-btn {
+     position: static !important;
+     display: inline-block;
+     margin: 0 auto;
+     min-width: 120px;
+   }
+   
+   /* 放大图可拖动时的鼠标形态提示 */
+   .lightbox-img-wrap {
+     cursor: grab;
+   }
+   
+   .lightbox-img-wrap:active {
+     cursor: grabbing;
+   }
+   
+   /* ===============================
+      Toast + 回到顶部按钮
+      =============================== */
+   
+   .cslb-toast {
+     position: fixed;
+     left: 50%;
+     bottom: 24px;
+     transform: translateX(-50%) translateY(10px);
+     padding: 8px 16px;
+     background: rgba(0, 0, 0, 0.86);
+     color: #fff;
+     border-radius: 999px;
+     font-size: 13px;
+     white-space: nowrap;
+     opacity: 0;
+     pointer-events: none;
+     z-index: 10000;
+     transition: opacity 0.15s ease, transform 0.15s ease;
+   }
+   
+   .cslb-toast.visible {
+     opacity: 1;
+     transform: translateX(-50%) translateY(0);
+   }
+   
+   /* 回到顶部按钮 */
+   .back-to-top-btn {
+     position: fixed;
+     bottom: 20px;
+     right: 20px;
+     background-color: #0078d4;
+     color: white;
+     border: none;
+     border-radius: 50%;
+   
+     width: 42px;
+     height: 42px;
+     padding: 0;
+   
+     display: none;
+     align-items: center;
+     justify-content: center;
+   
+     font-size: 20px;
+     cursor: pointer;
+     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+     transition: background-color 0.3s;
+     z-index: 9998;
+   }
+   
+   .back-to-top-btn.show {
+     display: flex;
+   }
+   
+   .back-to-top-btn:hover {
+     background-color: #005ea6;
+   }
+   
+   /* ===============================
+      收藏夹弹窗（favorites.js）整体样式
+      =============================== */
+   
+   .fav-overlay {
+     position: fixed;
+     inset: 0;
+     display: none;
+     align-items: center;
+     justify-content: center;
+     background: rgba(0, 0, 0, 0.4);
+     z-index: 9999;
+   }
+   
+   .fav-overlay.fav-overlay--visible {
+     display: flex;
+   }
+   
+   .fav-dialog {
+     background: #fff;
+     border-radius: 12px;
+     width: 90%;
+     max-width: 420px;
+     max-height: 80vh;
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+     display: flex;
+     flex-direction: column;
+     overflow: hidden;
+   }
+   
+   .fav-dialog-header {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     padding: 10px 12px;
+     border-bottom: 1px solid #eee;
+   }
+   
+   .fav-tabs {
+     display: inline-flex;
+     border-radius: 999px;
+     background: #f3f4f6;
+     padding: 2px;
+     display: none;
+   }
+   
+   .fav-tab {
+     border: none;
+     background: transparent;
+     padding: 4px 10px;
+     border-radius: 999px;
+     font-size: 13px;
+     cursor: pointer;
+   }
+   
+   .fav-tab--active {
+     background: #fff;
+     box-shadow: 0 0 0 1px #e5e7eb;
+   }
+   
+   .fav-dialog-close {
+     border: none;
+     background: transparent;
+     font-size: 18px;
+     line-height: 1;
+     cursor: pointer;
+   }
+   
+   .fav-dialog-body {
+     padding: 8px 12px;
+     overflow-y: auto;
+     flex: 1;
+   }
+   
+   .fav-dialog-body--loading {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+   
+   .fav-dialog-loading {
+     font-size: 13px;
+     color: #666;
+   }
+   
+   .fav-dialog-footer {
+     padding: 8px 12px 10px;
+     border-top: 1px solid #eee;
+     display: flex;
+     justify-content: flex-end;
+   }
+   
+    .fav-create-btn {
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 14px;
+      border: none;
+      background: #0078d4;
+      color: #ffffff;
+      cursor: pointer;
+    }
+    
+    .fav-create-btn:hover {
+      background: #005ea6;
+    }
+  
+   
+   .fav-collection-list {
+     display: flex;
+     flex-direction: column;
+     gap: 6px;
+   }
+   
+   /* ===== 收藏夹行布局：3 行 3 列 =====
+      第 1 行：图标 + 名称
+      第 2 行：右侧 “＋添加 / ✔已包含”
+      第 3 行：左侧项目数，右侧“查看 / 重命名 / 删除”
+      ================================== */
+   
+   .fav-collection-row {
+     display: grid;
+     grid-template-columns: auto 1fr auto; /* 图标 | 文本 | 右侧操作 */
+     grid-template-rows: auto auto auto;
+     column-gap: 8px;
+     row-gap: 2px;
+     padding: 6px 10px;
+     border-radius: 8px;
+     border: 1px solid transparent;
+     cursor: pointer;
+     align-items: flex-start;
+   }
+   
+   .fav-collection-row:hover {
+     background: #f9fafb;
+   }
+   
+   .fav-collection-row--selected {
+     border-color: #3b82f6;
+     background: #eff6ff;
+   }
+   
+   /* 左侧图标：根据 data-visibility 判断 👤 / 👥 */
+   .fav-collection-row::before {
+     grid-column: 1;
+     grid-row: 1 / span 3;
+     align-self: flex-start;
+     font-size: 16px;
+   }
+   
+   /* 私人（默认） */
+   .fav-collection-row[data-visibility="private"]::before,
+   .fav-collection-row:not([data-visibility])::before {
+     content: "👤";
+   }
+   
+   /* 公共 */
+   .fav-collection-row[data-visibility="public"]::before {
+     content: "👥";
+   }
+   
+   /* 名称块：第 1 行，第 2 列 */
+   .fav-collection-row-main {
+     grid-column: 2;
+     grid-row: 1;
+     min-width: 0;
+   }
+    
+   /* 收藏夹弹窗，收藏夹加名称 */
+   .fav-collection-name {
+     font-size: 18px;
+     font-weight: 500;
+     color: #111827;
+   }
+   
+   .fav-collection-desc {
+     font-size: 12px;
+     color: #6b7280;
+     margin-top: 2px;
+   }
+   
+   /* 第 2 行：右侧 “＋添加 / ✔ 已包含” */
+   .fav-collection-toggle {
+    font-size: 16px;
+    color: #2563eb;
+    align-self: flex-end;   /* 在右侧对齐 */
+  }
+  
+  
+   
+   /* 第 3 行：左侧项目数 + 创建人等 meta */
+   .fav-collection-meta {
+     grid-column: 2;
+     grid-row: 3;
+     font-size: 13px;
+     color: #6b7280;
+     display: flex;
+     flex-wrap: wrap;
+     gap: 4px 8px;
+     align-items: center;
+   }
+   
+   .fav-collection-count {
+     white-space: nowrap;
+   }
+   
+   /* 创建人（owner_name） */
+   .fav-collection-owner {
+     white-space: nowrap;
+     opacity: 0.9;
+   }
+   
+   /* 右侧 badge（如果你还需要的话） */
+   .fav-collection-badge {
+     padding: 1px 6px;
+     border-radius: 999px;
+     background: #f3f4f6;
+   }
+   
+   /* 第 3 行：右侧“查看 / 重命名 / 删除” */
+   .fav-collection-actions {
+     grid-column: 3;
+     grid-row: 3;
+     justify-self: end;
+     font-size: 13px;
+     color: #6b7280;
+     display: flex;
+     gap: 6px;
+     align-items: center;
+   }
+   
+   /* 空态 / 错误提示 */
+   .fav-empty,
+   .fav-error {
+     font-size: 13px;
+     color: #6b7280;
+     padding: 12px 4px;
+     text-align: center;
+   }
+   
+   /* 弹窗中的小操作链接 */
+   .fav-action-link {
+     border: none;
+     background: transparent;
+     padding: 0;
+     margin: 0;
+     font-size: 13px;
+     color: #2563eb;
+     cursor: pointer;
+   }
+   
+   .fav-action-link:hover {
+     text-decoration: underline;
+   }
+   
+   .fav-action-link--danger {
+     color: #dc2626;
+   }
+   
+   .fav-action-link--danger:hover {
+     text-decoration: underline;
+   }
+   
+   /* 私密 / 公开不同底色，方便区分 */
+  .fav-collection-row--private {
+    background-color: #f5f7ff;
+  }
+
+  .fav-collection-row--public {
+    background-color: #f8fafc;
+  }
+
+  /* 已选中时仍然加一圈边框高亮 */
+  .fav-collection-row--selected {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.4);
+  }
+
+  /* 右侧操作区：就是一行，把 actions 挂在这里 */
+  .fav-collection-right {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+    display: flex;
+    flex-direction: column;   /* 竖着排 */
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  /* “设为私密” 这四个字 */
+  .fav-vis-label {
+    font-size: 13px;
+    color: #6b7280;
+  }
+
+  /* switch 开关外壳 */
+  .fav-vis-toggle {
+    position: relative;
+    width: 30px;
+    height: 16px;
+    border-radius: 999px;
+    border: none;
+    padding: 0;
+    background-color: #d1d5db; /* OFF 状态 */
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* switch 里面的小圆点 */
+  .fav-vis-toggle-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.18s ease;
+  }
+
+  /* ON 状态（当前为私密） */
+  .fav-vis-toggle--on {
+    background-color: #4f46e5;
+  }
+
+  .fav-vis-toggle--on .fav-vis-toggle-knob {
+    transform: translateX(14px);
+  }
+
+  /* 灰掉的不可操作开关（别人建的） */
+  .fav-vis-toggle--disabled,
+  .fav-vis-toggle--disabled:hover {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+   /* ===============================
+      项目卡片右下角小星星按钮
+      =============================== */
+   
+   .project-card-thumb {
+     position: relative;
+   }
+   
+   /* 收藏按钮：封面图右下角 */
+   .card-fav-btn {
+     position: absolute;
+     bottom: 6px;
+     right: 6px;
+     z-index: 5;
+     border: none;
+     background: rgba(0, 0, 0, 0.6);
+     color: #fff;
+     width: 24px;
+     height: 24px;
+     border-radius: 999px;
+     font-size: 14px;
+     line-height: 1;
+     cursor: pointer;
+     opacity: 0;
+     pointer-events: none;
+     transition: opacity 0.15s ease;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 0;
+   }
+   
+   .project-card:hover .card-fav-btn {
+     opacity: 1;
+     pointer-events: auto;
+   }
+   
+   .card-fav-btn:hover {
+     background: rgba(0, 0, 0, 0.7);
+   }
+   
+   /* ===============================
+      页面右上角大五角星按钮
+      =============================== */
+   
+   #big-fav-btn {
+     position: absolute;
+     right: 20px;
+     top: -50px; /* 在工具栏上方，视觉上在“编辑”上方 */
+     font-size: 32px;
+     line-height: 1;
+     color: #b0b0b0;
+     background: transparent;
+     border: none;
+     border-radius: 0;
+     width: auto;
+     height: auto;
+     padding: 0;
+     cursor: pointer;
+     box-shadow: none;
+   }
+   
+   #big-fav-btn:hover {
+     color: #888;
+     background: transparent;
+   }
+   
+   #big-fav-btn.is-active {
+     color: #ffb400;
+   }
+   
+   /* ===============================
+      收藏夹模式 banner（页内）
+      =============================== */
+   
+   #collection-banner {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     flex-wrap: wrap;
+     padding: 10px 14px;
+     margin-bottom: 10px;
+     background: #eef5ff;
+     border: 1px solid #c5d9ff;
+     border-radius: 8px;
+     font-size: 13px;
+     color: #1f3a93;
+   }
+   
+   .collection-banner-left {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 6px 10px;
+     align-items: center;
+   }
+   
+   /* banner 中每个收藏夹标签：图标 + 名称 + 创建人 */
+   .collection-banner-tag {
+     display: inline-flex;
+     align-items: center;
+     gap: 4px;
+     background: #dbeafe;
+     color: #1d4ed8;
+     padding: 2px 10px;
+     border-radius: 999px;
+     cursor: pointer;
+     line-height: 1;
+     transition: all 0.15s ease;
+   }
+   
+    /* 私人收藏夹：浅蓝 */
+  .collection-banner-tag[data-visibility="private"] {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+  .collection-banner-tag[data-visibility="private"]:hover {
+    background: #bfdbfe;
+  }
+  .collection-banner-tag.active[data-visibility="private"] {
+    background: #1d4ed8;
+    color: #fff;
+  }
+
+  /* 公共收藏夹：偏紫一点 */
+  .collection-banner-tag[data-visibility="public"] {
+    background: #e0e7ff;
+    color: #4338ca;
+  }
+  .collection-banner-tag[data-visibility="public"]:hover {
+    background: #c7d2ff;
+  }
+  .collection-banner-tag.active[data-visibility="public"] {
+    background: #4f46e5;
+    color: #fff;
+  }
+
+   .collection-banner-tag:hover {
+     background: #bfdbfe;
+   }
+   
+   .collection-banner-tag.active {
+     background: #1d4ed8;
+     color: #fff;
+   }
+   
+   .collection-banner-icon {
+     font-size: 15px;
+   }
+   
+   .collection-banner-name {
+     font-weight: 500;
+   }
+   
+   .collection-banner-owner {
+     font-size: 12px;
+     opacity: 0.9;
+     margin-left: 4px;
+   }
+   
+   .collection-banner-btn {
+     border: 1px solid #94b3ff;
+     border-radius: 999px;
+     padding: 4px 10px;
+     font-size: 12px;
+     background: #fff;
+     color: #1d4ed8;
+     cursor: pointer;
+   }
+   
+   .collection-banner-btn:hover {
+     background: #e0ebff;
+   }
+   
+   .project-tags-row {
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .project-tags-row .tag-pill {
+    font-size: 12px;
+  }
+  

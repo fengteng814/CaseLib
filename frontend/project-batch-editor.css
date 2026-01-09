@@ -1,0 +1,177 @@
+/* 批量编辑 Modal 样式 */
+
+.pbe-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.pbe-overlay.pbe-open {
+  display: flex;
+}
+
+.pbe-modal {
+  width: 520px;
+  max-width: 96vw;
+  max-height: 90vh;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pbe-header {
+  padding: 10px 16px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pbe-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pbe-close-btn {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: #666;
+}
+
+.pbe-close-btn:hover {
+  color: #000;
+}
+
+.pbe-body {
+  padding: 10px 16px 12px;
+  overflow-y: auto;
+}
+
+.pbe-tip {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.pbe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pbe-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+.pbe-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pbe-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #333;
+}
+
+.pbe-toggle input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+}
+
+.pbe-input,
+.pbe-textarea {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #d0d0d0;
+  padding: 5px 8px;
+  font-size: 13px;
+}
+
+.pbe-input:focus,
+.pbe-textarea:focus {
+  outline: none;
+  border-color: #8056d5;
+  box-shadow: 0 0 0 1px rgba(128, 86, 213, 0.15);
+}
+
+.pbe-textarea {
+  resize: vertical;
+  min-height: 50px;
+}
+
+/* 页脚 */
+
+.pbe-footer {
+  padding: 8px 16px 10px;
+  border-top: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pbe-status {
+  font-size: 12px;
+  color: #666;
+}
+
+.pbe-status-error {
+  color: #c00;
+}
+
+.pbe-btn-group {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.pbe-btn {
+  border-radius: 999px;
+  border: none;
+  font-size: 13px;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+.pbe-btn-primary {
+  background-color: #8056d5;
+  color: #fff;
+}
+
+.pbe-btn-primary:hover {
+  background-color: #6541b0;
+}
+
+.pbe-btn-ghost {
+  background-color: transparent;
+  color: #444;
+}
+
+.pbe-btn-ghost:hover {
+  background-color: #f0f0f0;
+}
+
+.pbe-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

@@ -1,0 +1,58 @@
+<!-- frontend/web-import.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>案例导入 - CaseLib</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="stylesheet" href="/static/web-import.css" />
+</head>
+<body>
+  <div class="app-root">
+    <header class="app-header">
+      <div class="app-header-main">
+        <h1 class="app-title">案例导入</h1>
+      </div>
+      <div class="toolbar">
+        <button
+          type="button"
+          class="toolbar-secondary"
+          onclick="window.location.href='/'"
+        >
+          ← 返回案例库
+        </button>
+      </div>
+    </header>
+
+    <main class="app-main web-import-main">
+      <section class="web-import-form-section">
+        <div class="web-import-form">
+          <label for="import-url-input">项目链接：</label>
+          <input
+            id="import-url-input"
+            type="text"
+            placeholder="粘贴项目链接，例如：https://www.archdaily.cn/..."
+          />
+          <div class="web-import-form-row">
+            <button id="import-parse-btn" type="button">解析项目</button>
+          </div>
+          <div class="web-import-supported">
+            <span>当前支持的网站</span>
+            <ul id="supported-sites-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="import-preview-section"
+        class="web-import-preview-section web-import-preview-section--empty"
+      >
+        <p class="center-hint">解析成功后将在这里预览项目信息和图片。</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/web-import.js"></script>
+</body>
+</html>
